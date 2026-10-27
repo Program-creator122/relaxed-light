@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nonlinear Signal Animation</title>
+  <style>
+    body {
+      margin: 0;
+      background: #eee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: sans-serif;
+    }
+
+    /* المربع الأصفر المستقل */
+    .signal-box {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      background: yellow;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      border: 4px solid #333;
+    }
+
+    /* الطبقات الملونة */
+    .layer {
+      position: absolute;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .red { border: 6px solid red; }
+    .green { border: 6px solid green; }
+    .yellow { border: 6px solid orange; }
+  </style>
+</head>
+<body>
+  <!-- المربع الأصفر المستقل -->
+  <div class="signal-box">
+    <div class="layer red"></div>
+    <div class="layer green"></div>
+    <div class="layer yellow"></div>
+  </div>
+
+  <script>
+    const layers = document.querySelectorAll(".layer");
+    let t = 0;
+
+    function animateLayers(){
+      t += 0.05; // الزمن
+
+      layers.forEach((layer, i)=>{
+        // معادلة غير خطية باستخدام sin/cos
+        let dynamicSize = 100 + Math.abs(Math.sin(t + i)) * 120;
+        layer.style.width = dynamicSize + "px";
+        layer.style.height = dynamicSize + "px";
+      });
+
+      requestAnimationFrame(animateLayers);
+    }
+
+    animateLayers();
+  </script>
+</body>
+</html>
